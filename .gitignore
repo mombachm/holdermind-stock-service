@@ -7,3 +7,8 @@ yarn.lock
 
 #other
 /dist
+
+#terraform
+/.terraform
+*.tfstate
+*.tfstate.backup
