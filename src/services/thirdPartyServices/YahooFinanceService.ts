@@ -1,29 +1,45 @@
 import Axios from "axios";
-
-const YahooFinanceServiceURI = "https://query2.finance.yahoo.com/v7";
-
-enum YahooFinanceModules {
-  Finance = "/finance"
-}
-
-enum YahooFinanceRoute {
-  Quote = "/quote"
-}
-
-// https://query2.finance.yahoo.com/v7/finance/quote?symbols=SAPR4.SA
-// https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=Okt310BSzzk&lang=en-US&region=US&symbols=SAPR4.SA&fields=&corsDomain=finance.yahoo.com
+import {
+  DesiredYahooFinanceQuoteFields,
+  YahooFinanceParameters,
+  YahooFinanceModules,
+  YahooFinanceRoute,
+  YahooFinanceServiceURI,
+} from "./YahooFinanceParameters";
 
 export class YahooFinanceService {
-
-  public static async getStockinfo(): Promise<any> {
-    const response = await Axios.get(YahooFinanceServiceURI + YahooFinanceModules.Finance + YahooFinanceRoute.Quote, {
-      params: {
-        symbols: "SAPR4.SA"
+  public static async getStockinfo(stockCode: string): Promise<any> {
+    const response = await Axios.get(
+      this.buildUrl(YahooFinanceModules.Finance, YahooFinanceRoute.Quote),
+      {
+        params: {
+          [YahooFinanceParameters.Symbols]: this.buildStockSymbol(stockCode),
+          [YahooFinanceParameters.Fields]: this.buildFieldsParameter(
+            DesiredYahooFinanceQuoteFields
+          ),
+          [YahooFinanceParameters.Language]: "pt-BR",
+          [YahooFinanceParameters.Formatted]: true,
+        },
       }
-    });
+    );
     if (response.data.quoteResponse.result) {
       return response.data.quoteResponse.result[0];
     }
     return {};
+  }
+
+  private static buildUrl(
+    module: YahooFinanceModules,
+    route: YahooFinanceRoute
+  ): string {
+    return `${YahooFinanceServiceURI}/${module}/${route}`;
+  }
+
+  private static buildFieldsParameter(fields: string[]): string {
+    return fields.join(",");
+  }
+
+  private static buildStockSymbol(stockCode: string): string {
+    return `${stockCode}.SA`;
   }
 }
