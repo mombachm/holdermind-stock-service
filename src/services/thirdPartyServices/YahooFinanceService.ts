@@ -8,22 +8,22 @@ import {
 } from "./YahooFinanceParameters";
 
 export class YahooFinanceService {
-  public static async getStockinfo(stockCode: string): Promise<any> {
+  public static async getStocksInfo(stocksCode: string | string[]): Promise<any> {
     const response = await Axios.get(
       this.buildUrl(YahooFinanceModules.Finance, YahooFinanceRoute.Quote),
       {
         params: {
-          [YahooFinanceParameters.Symbols]: this.buildStockSymbol(stockCode),
+          [YahooFinanceParameters.Symbols]: this.buildStockSymbolParameter(stocksCode),
           [YahooFinanceParameters.Fields]: this.buildFieldsParameter(
             DesiredYahooFinanceQuoteFields
           ),
           [YahooFinanceParameters.Language]: "pt-BR",
-          [YahooFinanceParameters.Formatted]: true,
+          [YahooFinanceParameters.Formatted]: true
         },
       }
     );
     if (response.data.quoteResponse.result) {
-      return response.data.quoteResponse.result[0];
+      return response.data.quoteResponse.result;
     }
     return {};
   }
@@ -39,7 +39,13 @@ export class YahooFinanceService {
     return fields.join(",");
   }
 
-  private static buildStockSymbol(stockCode: string): string {
+  private static buildStockSymbolParameter(stockCode: string | string[]): string {
+    if (Array.isArray(stockCode)) {
+      stockCode = stockCode.map((code) => {
+        return `${code}.SA`;
+      });
+      return stockCode.join(",");
+    }
     return `${stockCode}.SA`;
   }
 }

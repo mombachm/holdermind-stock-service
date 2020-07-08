@@ -3,22 +3,22 @@ import { RoutingController } from "./abstractRoutingController/RoutingController
 import { StockService } from "../services/StockService";
 
 export enum StockControllerRoute {
-  GetStockInfo = "/getStockInfo"
+  GetStocksInfo = "/getStocksInfo"
 }
 
 export enum StockControllerParameter {
-  StockCode = "stockCode"
+  StocksCode = "stocksCode"
 }
 
 export class StockController extends RoutingController {
 
   protected assembleRoutes(): void {
-    this.router.get(StockControllerRoute.GetStockInfo, this.getStockInfo);
+    this.router.get(StockControllerRoute.GetStocksInfo, this.getStocksInfo);
   }
 
-  public async getStockInfo(req: express.Request, res: express.Response): Promise<void> {
-    const stockCode = req.query.stockCode.toString();
-    const stockInfo = await StockService.getStockinfo(stockCode);
+  public async getStocksInfo(req: express.Request, res: express.Response): Promise<void> {
+    const stocksCode = req.query.stocksCode.toString().split(",");
+    const stockInfo = await StockService.getStocksInfo(stocksCode);
     res.json(stockInfo);
   }
 }
