@@ -1,5 +1,6 @@
 import * as express from "express";
 import { RoutingController } from "./abstractRoutingController/RoutingController";
+import { StockService } from "../services/StockService";
 
 export class StockController extends RoutingController {
 
@@ -8,9 +9,8 @@ export class StockController extends RoutingController {
   }
 
   public async getStockInfo(req: express.Request, res: express.Response): Promise<void> {
-    res.json({
-      cod: "ITSA4",
-      value: "10.02"
-    });
+    const stockInfo = await StockService.getStockinfo();
+    console.log(stockInfo);
+    res.json(stockInfo);
   }
 }
