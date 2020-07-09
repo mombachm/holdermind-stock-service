@@ -18,7 +18,7 @@ export class YahooFinanceService {
             DesiredYahooFinanceQuoteFields
           ),
           [YahooFinanceParameters.Language]: "pt-BR",
-          [YahooFinanceParameters.Formatted]: true
+          [YahooFinanceParameters.Formatted]: false
         },
       }
     );
