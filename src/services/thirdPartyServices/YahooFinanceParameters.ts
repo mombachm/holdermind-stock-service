@@ -1,19 +1,54 @@
-export const YahooFinanceServiceURI = "https://query2.finance.yahoo.com/v7";
+export const YahooFinanceServiceV7URI = "https://query2.finance.yahoo.com/v7";
+export const YahooFinanceServiceV10URI = "https://query2.finance.yahoo.com/v10";
 
-export enum YahooFinanceModules {
+export enum YahooFinanceMainModule {
   Finance = "finance"
 }
 
+export enum YahooFinanceSubmoduleParameter {
+  SummaryDetail = "summaryDetail",
+  AssetProfile = "assetProfile",
+  RecommendationTrend = "recommendationTrend",
+  CashflowStatementHistory = "cashflowStatementHistory",
+  IndexTrend = "indexTrend",
+  DefaultKeyStatistics = "defaultKeyStatistics",
+  IndustryTrend = "industryTrend",
+  IncomeStatementHistory = "incomeStatementHistory",
+  FundOwnership = "fundOwnership",
+  InsiderHolders = "insiderHolders",
+  CalendarEvents = "calendarEvents",
+  UpgradeDowngradeHistory = "upgradeDowngradeHistory",
+  BalanceSheetHistory = "balanceSheetHistory",
+  EarningsTrend = "earningsTrend",
+  SecFilings = "secFilings",
+  InstitutionOwnership = "institutionOwnership",
+  MajorHoldersBreakdown = "majorHoldersBreakdown",
+  BalanceSheetHistoryQuarterly = "balanceSheetHistoryQuarterly",
+  EarningsHistory = "earningsHistory",
+  MajorDirectHolders = "majorDirectHolders",
+  NetSharePurchaseActivity = "netSharePurchaseActivity",
+  InsiderTransactions = "insiderTransactions",
+  SectorTrend = "sectorTrend",
+  IncomeStatementHistoryQuarterly = "incomeStatementHistoryQuarterly",
+  CashflowStatementHistoryQuarterly = "cashflowStatementHistoryQuarterly",
+  Earnings = "earnings",
+  FinancialData = "financialData",
+}
+
 export enum YahooFinanceRoute {
-  Quote = "quote"
+  Quote = "quote",
+  QuoteSummary = "quoteSummary",
 }
 
 export enum YahooFinanceParameters {
   Symbols = "symbols",
   Fields = "fields",
   Language = "lang",
-  Formatted= "formatted"
+  Formatted = "formatted",
+  Modules = "modules",
 }
+
+enum YahooFinanceSummaryDetail {}
 
 enum YahooFinanceQuoteFieldKey {
   language = "language",
@@ -46,6 +81,7 @@ enum YahooFinanceQuoteFieldKey {
   trailingAnnualDividendRate = "trailingAnnualDividendRate",
   trailingPE = "trailingPE",
   trailingAnnualDividendYield = "trailingAnnualDividendYield",
+  dividendYield = "dividendYield",
   epsTrailingTwelveMonths = "epsTrailingTwelveMonths",
   epsForward = "epsForward",
   sharesOutstanding = "sharesOutstanding",
@@ -80,12 +116,14 @@ enum YahooFinanceQuoteFieldKey {
   firstTradeDateMilliseconds = "firstTradeDateMilliseconds",
   priceHint = "priceHint",
   marketState = "marketState",
-  symbol = "symbol"
+  symbol = "symbol",
 }
 
 export const DesiredYahooFinanceQuoteFields = [
   YahooFinanceQuoteFieldKey.regularMarketPrice,
   YahooFinanceQuoteFieldKey.trailingAnnualDividendYield,
   YahooFinanceQuoteFieldKey.trailingPE,
-  YahooFinanceQuoteFieldKey.forwardPE
+  YahooFinanceQuoteFieldKey.forwardPE,
+  YahooFinanceQuoteFieldKey.dividendYield,
+  YahooFinanceQuoteFieldKey.regularMarketChangePercent
 ];

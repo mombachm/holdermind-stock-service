@@ -1,8 +1,21 @@
 import { YahooFinanceService } from "./thirdPartyServices/YahooFinanceService";
+import { YahooFinanceSubmoduleParameter } from "./thirdPartyServices/YahooFinanceParameters";
 
 export class StockService {
-  public static async getStocksInfo(stocksCode: string[]): Promise<any> {
+  public static async getStocksInfo(stocksCode: string | string[]): Promise<any> {
     const response = await YahooFinanceService.getStocksInfo(stocksCode);
     return response;
+  }
+
+  public static async getStockMainInfo(stockCode: string): Promise<any> {
+    const responseMainInfo = await YahooFinanceService.getStockInfoV10(stockCode, [
+      YahooFinanceSubmoduleParameter.FinancialData,
+      YahooFinanceSubmoduleParameter.SummaryDetail,
+    ]);
+    const responseMarketInfo = await this.getStocksInfo(stockCode);
+    if (responseMainInfo.length && responseMainInfo[0].summaryDetail && responseMarketInfo.length) {
+      return {...responseMainInfo[0].summaryDetail, ...responseMainInfo[0].financialData, ...responseMarketInfo[0]};
+    }
+    return {};
   }
 }
