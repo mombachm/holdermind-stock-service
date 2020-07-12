@@ -33,4 +33,11 @@ export class StockService {
     }
     return null;
   }
+
+  public static async searchStocks(
+    searchText: string
+  ): Promise<any | null> {
+    const response = await YahooFinanceService.searchStocks(searchText);
+    return response;
+  }
 }

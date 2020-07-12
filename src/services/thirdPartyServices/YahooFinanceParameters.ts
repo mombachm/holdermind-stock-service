@@ -1,3 +1,4 @@
+export const YahooFinanceServiceV1URI = "https://query1.finance.yahoo.com/v1";
 export const YahooFinanceServiceV7URI = "https://query2.finance.yahoo.com/v7";
 export const YahooFinanceServiceV10URI = "https://query2.finance.yahoo.com/v10";
 
@@ -38,6 +39,7 @@ export enum YahooFinanceSubmoduleParameter {
 export enum YahooFinanceRoute {
   Quote = "quote",
   QuoteSummary = "quoteSummary",
+  Search = "search",
 }
 
 export enum YahooFinanceParameters {
@@ -46,6 +48,12 @@ export enum YahooFinanceParameters {
   Language = "lang",
   Formatted = "formatted",
   Modules = "modules",
+  SearchQuery = "q",
+  QuotesCount = "quotesCount",
+  EnableFuzzyQuery = "enableFuzzyQuery",
+  QuotesQueryId = "quotesQueryId",
+  MultiQuoteQueryId = "multiQuoteQueryId",
+  EnableEnhancedTrivialQuery = "enableEnhancedTrivialQuery"
 }
 
 enum YahooFinanceSummaryDetail {}

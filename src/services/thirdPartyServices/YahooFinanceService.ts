@@ -7,6 +7,7 @@ import {
   YahooFinanceMainModule,
   YahooFinanceSubmoduleParameter,
   YahooFinanceServiceV10URI,
+  YahooFinanceServiceV1URI,
 } from "./YahooFinanceParameters";
 
 export class YahooFinanceService {
@@ -64,6 +65,40 @@ export class YahooFinanceService {
     } catch (error) {
       return null;
     }
+  }
+
+  public static async searchStocks(searchText: string): Promise<any[] | null> {
+    try {
+      const response = await Axios.get(
+        this.buildV1Url(
+          YahooFinanceMainModule.Finance,
+          YahooFinanceRoute.Search
+        ),
+        {
+          params: {
+            [YahooFinanceParameters.SearchQuery]: searchText,
+            [YahooFinanceParameters.Language]: "pt-BR",
+            [YahooFinanceParameters.QuotesCount]: 6,
+            [YahooFinanceParameters.EnableFuzzyQuery]: false,
+            [YahooFinanceParameters.QuotesQueryId]: "tss_match_phrase_query",
+            [YahooFinanceParameters.MultiQuoteQueryId]: "multi_quote_single_token_query",
+            [YahooFinanceParameters.EnableEnhancedTrivialQuery]: true
+          },
+        }
+      );
+      if (response.data.quotes) {
+        return response.data.quotes;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
+  private static buildV1Url(
+    module: YahooFinanceMainModule,
+    route: YahooFinanceRoute
+  ): string {
+    return `${YahooFinanceServiceV1URI}/${module}/${route}`;
   }
 
   private static buildV7Url(
