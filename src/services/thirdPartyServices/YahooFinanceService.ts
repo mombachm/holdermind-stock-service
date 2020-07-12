@@ -90,7 +90,7 @@ export class YahooFinanceService {
         return response.data.quotes;
       }
     } catch (error) {
-      return error;
+      return null;
     }
   }
 
@@ -126,11 +126,8 @@ export class YahooFinanceService {
     stockCode: string | string[]
   ): string {
     if (Array.isArray(stockCode)) {
-      stockCode = stockCode.map((code) => {
-        return `${code}.SA`;
-      });
       return stockCode.join(",");
     }
-    return `${stockCode}.SA`;
+    return stockCode;
   }
 }
